@@ -5,7 +5,6 @@ class Program
     {
         float dec = 123.456f;
 
-
         void ieee32(float dec)
         {
 

@@ -1,10 +1,12 @@
-﻿namespace console_app;
+namespace console_app;
 
 class Program
 {
     static void Main(string[] args)
     {
         float dec = 123.456f;
+        string bin32 = "01000010111101101110100101111001";
+        string bin64 = "0100000001011110110111010010111100011010100111111011111001110111";
 
         void ieee32(float dec)
         {
@@ -61,7 +63,7 @@ class Program
                 bin = bin + "0";
             }
 
-            Console.WriteLine("32bit    " + bin);
+            Console.WriteLine($"the 32 bit binar of {dec} is {bin}");
         }
 
         void ieee64(float dec)
@@ -119,10 +121,92 @@ class Program
                 bin = bin + "0";
             }
 
-            Console.WriteLine("64bit    " + bin);
+            Console.WriteLine($"the 64 bit binar of {dec} is {bin}");
+        }
+
+        void Bin32ToFloat(string bin)
+        {
+
+            double result = 0;
+
+            if (bin[0] == '0') 
+            {
+                int sign = 1;
+            }
+            else
+            {
+                int sign = -1;
+            }
+
+            string exp = bin.Substring(1, 8);
+            string mant = bin.Substring(9, 23);
+
+            double exp1 = 0;
+            double mant1 = 0;
+
+            for (int i = 0; i < exp.Length; i++)
+            {
+                exp1 = exp1 * 2 + (exp[i] - '0');
+            }
+
+            exp1 -= 127;
+
+
+            for (int i = 0; i < mant.Length; i++)
+            {
+                mant1 += (mant[i] - '0') * Math.Pow(2, -1 - i);
+            }
+
+            mant1 += 1;
+
+            result = mant1 * Math.Pow(2, exp1);
+
+            Console.WriteLine($"the float of {bin} is {result}");
+        }
+
+        void Bin64ToFloat(string bin)
+        {
+
+            double result = 0;
+
+            if (bin[0] == '0') 
+            {
+                int sign = 1;
+            }
+            else
+            {
+                int sign = -1;
+            }
+
+            string exp = bin.Substring(1, 11);
+            string mant = bin.Substring(12, 52);
+
+            double exp1 = 0;
+            double mant1 = 0;
+
+            for (int i = 0; i < exp.Length; i++)
+            {
+                exp1 = exp1 * 2 + (exp[i] - '0');
+            }
+
+            exp1 -= 1023;
+
+
+            for (int i = 0; i < mant.Length; i++)
+            {
+                mant1 += (mant[i] - '0') * Math.Pow(2, -1 - i);
+            }
+
+            mant1 += 1;
+
+            result = mant1 * Math.Pow(2, exp1);
+
+            Console.WriteLine($"the float of {bin} is {result}");
         }
 
         ieee32(dec);
         ieee64(dec);
+        Bin32ToFloat(bin32);
+        Bin64ToFloat(bin64);
     }
 }

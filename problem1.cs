@@ -1,12 +1,15 @@
+using System.Reflection.Metadata;
+
 namespace console_app;
 
 class Program
 {
     static void Main(string[] args)
     {
-        float dec = 123.456f;
+        float dec1 = 123.456f;
+        float dec2 = -123.456f;
         string bin32 = "01000010111101101110100101111001";
-        string bin64 = "0100000001011110110111010010111100011010100111111011111001110111";
+        string bin64 = "1100000001011110110111010010111100011010100111111011111001110111";
 
         void ieee32(float dec)
         {
@@ -128,14 +131,15 @@ class Program
         {
 
             double result = 0;
+            int sign = 0;
 
             if (bin[0] == '0') 
             {
-                int sign = 1;
+                sign = 1;
             }
             else
             {
-                int sign = -1;
+                sign = -1;
             }
 
             string exp = bin.Substring(1, 8);
@@ -159,7 +163,7 @@ class Program
 
             mant1 += 1;
 
-            result = mant1 * Math.Pow(2, exp1);
+            result = sign * mant1 * Math.Pow(2, exp1);
 
             Console.WriteLine($"the float of {bin} is {result}");
         }
@@ -168,14 +172,15 @@ class Program
         {
 
             double result = 0;
+            int sign = 0;
 
             if (bin[0] == '0') 
             {
-                int sign = 1;
+                sign = 1;
             }
             else
             {
-                int sign = -1;
+                sign = -1;
             }
 
             string exp = bin.Substring(1, 11);
@@ -199,13 +204,13 @@ class Program
 
             mant1 += 1;
 
-            result = mant1 * Math.Pow(2, exp1);
+            result = sign * mant1 * Math.Pow(2, exp1);
 
             Console.WriteLine($"the float of {bin} is {result}");
         }
 
-        ieee32(dec);
-        ieee64(dec);
+        ieee32(dec1);
+        ieee64(dec2);
         Bin32ToFloat(bin32);
         Bin64ToFloat(bin64);
     }
